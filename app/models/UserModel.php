@@ -17,6 +17,12 @@ class UserModel {
       $st = $this->db->prepare("SELECT * FROM utilisateur WHERE email = ?"); 
       $st->execute([$email]);
        return $st->fetchAll(); 
+    }
+
+    public function findByEmailadmin($data) {
+      $st = $this->db->prepare("SELECT * FROM utilisateur WHERE email = ? AND nom = ? AND role = 'admin'"); 
+      $st->execute($data);
+       return $st->fetchAll(); 
     } 
 
     public function findByEmailAndUsername($data) {
