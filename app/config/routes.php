@@ -12,6 +12,7 @@ use flight\net\Router;
  * @var Router $router 
  * @var Engine $app
  */
+session_start();
 
 // This wraps all routes in the group with the SecurityHeadersMiddleware
 $router->group('', function(Router $router) use ($app) {
@@ -25,24 +26,54 @@ $router->group('', function(Router $router) use ($app) {
 	$router->get('/register', function() use ($app) {
 		$app->render('ModalLogin' , ['page' => 'Register']);
 	});
-	$router->get('/user', function() use ($app) {
-		$app->render('ModalLogin' , ['page' => 'UserLogin']);
-	});
+	// $router->get('/user', function() use ($app) {
+	// 	$app->render('ModalLogin' , ['page' => 'UserLogin']);
+	// });
 	$router->get('/admin', function() use ($app) {
 		$app->render('ModalLogin' , ['page' => 'AdminLogin']);
 	});
-	
-	$router->get('/Objet', [ObjectController::class, 'getAllObjects']); 
+	$router->get('/admin', function() use ($app) {
+		$controller = new ObjectController();
+		
+		// $router->get('/Objet', [ObjectController::class, 'getAllObjects']); 
+		$app->render('ModalLogin' , ['page' => 'AdminLogin' , 'categories' => $controller->getCategories()]);
+
+		// $app->render('ModalLogin' , ['page' => 'UserLogin']);
+	});
+
+	$router->get('/user', function() use ($app) {
+		$controller = new ObjectController();
+
+		$app->render('ModalLogin' , ['page' => 'UserLogin' , 'categories' => $controller->getCategories()]);
+
+		// $app->render('ModalLogin' , ['page' => 'UserLogin']);
+	});
+	$router->get('/home', function() use ($app) {
+		$controller = new ObjectController();
+		$app->render('Modal' , ['page' => 'welcome' , 'categories' => $controller->getCategories()]);
+
+		// $app->render('ModalLogin' , ['page' => 'UserLogin']);
+	});
 	
 	$router->get('/logout', function() use ($app) {
-		if (session_status() === PHP_SESSION_NONE) {
-			session_start();
-		}
 		session_unset();
 		session_destroy();
 		$app->redirect('/');
 	});
-	
+	$router->get('/Objet', function() use ($app) {
+		$controller = new ObjectController();
+		$objects = $controller->getAllObjects();
+		$Categories = $controller->getCategories();
+		$app->render('Modal' , ['page' => 'Object' , 'categories' => $Categories , 'objects' => $objects]);
+	});
+
+	$router->get('/objet/create', function() use ($app) {
+		$controller = new ObjectController();
+		$categories = $controller->getCategories();
+		$app->render('Modal' , ['page' => 'CreateObject' , 'categories' => $categories]);
+	});
+	// $router->get('/Objet', [ObjectController::class, 'getAllObjects']); 
+
 	$router->post('/inscription', [LoginController::class, 'register']); 
 	$router->post('/adminLogin', [LoginController::class, 'LogintreatmentAdmin']);
 	$router->post('/userLogin', [LoginController::class, 'LogintreatmentUser']);

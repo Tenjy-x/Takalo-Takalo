@@ -61,7 +61,7 @@ class LoginController {
             }
             if($find != null && password_verify($password, $find[0]['mot_de_passe'])) {
                 session_unset();
-                session_start();
+                // session_start();
                 $_SESSION['Admin'] = $find[0];
                 // Flight::redirect("/index");
                 Flight::render('ModalAdmin' , ['page' => 'AdminPage' , 'categories' => $categories]);
@@ -111,7 +111,7 @@ class LoginController {
             }
             if($find != null && password_verify($password, $find[0]['mot_de_passe'])) {
                 session_unset();
-                session_start();
+                // session_start();
                 $_SESSION['user'] = $find[0];
                 // Flight::redirect("/index");
                 Flight::render('Modal' , ['page' => 'welcome', 'categories'=>$categories]);

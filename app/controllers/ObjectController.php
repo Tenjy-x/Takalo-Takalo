@@ -13,7 +13,7 @@ class ObjectController {
         if(session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        
+
         $user = $_SESSION['user'] ?? null;
         if (!$user) {
             Flight::halt(401, 'Vous devez être connecté');
@@ -25,6 +25,29 @@ class ObjectController {
         $objectModel = new ObjectModel(Flight::db());
         $objects = $objectModel->getAllobjetById($userid);
 
-        Flight::render("Modal", [ 'page' => 'Object', 'objects' => $objects , 'categories' => $categories ]);
+        return $objects;
+
+        // Flight::render("Modal", [ 'page' => 'Object', 'objects' => $objects ]);
+    }
+
+    public function getCategories() {
+        $categorieModel = new CategorieModel(Flight::db());
+        $categories = $categorieModel->getAllCategories();
+        return $categories;
+    }
+
+    public function createObject() {
+        if(session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $user = $_SESSION['user'] ?? null;
+        if (!$user) {
+            Flight::halt(401, 'Vous devez être connecté');
+            return;
+        }
+
+        // $objectModel = new ObjectModel(Flight::db());
+
     }
 }
