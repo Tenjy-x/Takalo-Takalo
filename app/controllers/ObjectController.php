@@ -47,7 +47,16 @@ class ObjectController {
             return;
         }
 
-        // $objectModel = new ObjectModel(Flight::db());
+        $titre = Flight::request()->data->titre ;
+        $description = Flight::request()->data->description;
+        $categorie = Flight::request()->data->categorie;
+        $image = Flight::request()->data->image;
 
+        $objectModel = new ObjectModel(Flight::db());
+        $objectModel->createObject($titre, $description, $categorie, $image);
+
+        Flight::redirect('/Objet');
     }
+
+    
 }

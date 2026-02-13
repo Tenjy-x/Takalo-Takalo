@@ -1,10 +1,72 @@
+<div class="container-fluid py-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-8 mx-auto">
+            <h2 class="section-title position-relative text-uppercase mb-4">
+                <span class="bg-secondary pr-3">Create New Object</span>
+            </h2>
+            <div class="bg-light p-4 mb-5">
+                <form method="POST" action="/objet/creation">
+                    <div class="form-group">
+                        <label for="titre" class="font-weight-bold">Title *</label>
+                        <input type="text" class="form-control" id="titre" name="titre" placeholder="Enter title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description" class="font-weight-bold">Description *</label>
+                        <textarea class="form-control" id="description" name="description" rows="4" placeholder="Describe your object in detail..." required></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="prix_estimatif" class="font-weight-bold">Estimated Price (MGA) *</label>
+                            <input type="number" class="form-control" id="prix_estimatif" name="prix_estimatif" step="0.01" placeholder="Ex: 25.00" required>
+                        </div>
+
+                        <div class="col-md-6 form-group">
+                            <label for="id_categorie" class="font-weight-bold">Category *</label>
+                            <select class="custom-select" id="id_categorie" name="id_categorie" required>
+                                <option value="">-- Select a category --</option>
+                                <?php if (isset($categories) && !empty($categories)): ?>
+                                    <?php foreach ($categories as $category): ?>
+                                        <option value="<?= htmlspecialchars($category['id_categorie']) ?>">
+                                            <?= htmlspecialchars($category['nom_categorie']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="images" class="font-weight-bold">Upload Images (Multiple) *</label>
+                        <input type="file" class="form-control-file" id="images" name="images[]" multiple accept="image/*" required>
+                        <small class="form-text text-muted">You can select multiple images (JPG, PNG, GIF)</small>
+                    </div>
+                    
+                    <div class="form-group mt-4">
+                        <button type="submit" class="btn btn-primary btn-block py-2 font-weight-bold">
+                            <i class="fa fa-plus mr-2"></i>Create Object
+                        </button>
+                        <a href="/Objet" class="btn btn-secondary btn-block py-2 font-weight-bold mt-2">
+                            <i class="fa fa-arrow-left mr-2"></i>Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ANCIEN CONTENU COMMENTÉ -->
+<!--
 <div class="container-fluid">
         <div class="row px-xl-5">
             <div class="col-lg-8">
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Billing Address</span></h5>
                 <div class="bg-light p-30 mb-5">
                     <div class="row">
-                        <div class="col-md-6 form-group">
+                        
+                         <div class="col-md-6 form-group">
                             <label>First Name</label>
                             <input class="form-control" type="text" placeholder="John">
                         </div>
@@ -60,10 +122,10 @@
                                 <input type="checkbox" class="custom-control-input" id="shipto">
                                 <label class="custom-control-label" for="shipto"  data-toggle="collapse" data-target="#shipping-address">Ship to different address</label>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
-                <div class="collapse mb-5" id="shipping-address">
+                <!-- <div class="collapse mb-5" id="shipping-address">
                     <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Shipping Address</span></h5>
                     <div class="bg-light p-30">
                         <div class="row">
@@ -114,9 +176,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
-            <div class="col-lg-4">
+            <!-- <div class="col-lg-4">
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Order Total</span></h5>
                 <div class="bg-light p-30 mb-5">
                     <div class="border-bottom">
@@ -150,8 +212,8 @@
                             <h5>$160</h5>
                         </div>
                     </div>
-                </div>
-                <div class="mb-5">
+                </div> -->
+                <!-- <div class="mb-5">
                     <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Payment</span></h5>
                     <div class="bg-light p-30">
                         <div class="form-group">
@@ -174,7 +236,7 @@
                         </div>
                         <button class="btn btn-block btn-primary font-weight-bold py-3">Place Order</button>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
