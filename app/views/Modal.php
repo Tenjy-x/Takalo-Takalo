@@ -118,7 +118,7 @@
                         <h6 class="text-dark m-0"><i class="fa fa-bars mr-2"></i>Categories</h6>
                     </button>
                     <div class="dropdown-menu w-100 rounded-0 border-0 m-0" style="z-index: 999;">
-                        <a href="#" class="dropdown-item">Dresses</a>
+                        <!-- <a href="#" class="dropdown-item">Dresses</a>
                         <a href="#" class="dropdown-item">Shirts</a>
                         <a href="#" class="dropdown-item">Jeans</a>
                         <a href="#" class="dropdown-item">Swimwear</a>
@@ -127,7 +127,12 @@
                         <a href="#" class="dropdown-item">Jumpsuits</a>
                         <a href="#" class="dropdown-item">Blazers</a>
                         <a href="#" class="dropdown-item">Jackets</a>
-                        <a href="#" class="dropdown-item">Shoes</a>
+                        <a href="#" class="dropdown-item">Shoes</a> -->
+                        <?php 
+                            foreach($categories as $category) { ?>
+                                <a href="#" class="dropdown-item"><?php echo $category['nom_categorie']; ?></a>
+                            <?php } 
+                        ?>
                     </div>
                 </div>
             </div>

@@ -131,7 +131,7 @@
                         <?php 
                             foreach($categories as $category) { ?>
                                 <a href="#" class="dropdown-item"><?php echo $category['nom_categorie']; ?></a>
-                            <?php } ?>
+                            <?php } 
                         ?>
                     </div>
                 </div>
