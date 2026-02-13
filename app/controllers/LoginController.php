@@ -2,7 +2,8 @@
 
 namespace app\controllers;
 
-use app\models\UserModel; 
+use app\models\UserModel;
+use app\models\CategorieModel;
 use flight\Engine;
 use Flight;
 
@@ -92,10 +93,12 @@ class LoginController {
 
 
             $users = new UserModel(Flight::db());
+            $categorieModel = new CategorieModel(Flight::db());
+            $categories = $categorieModel->getAllCategories();
             $username = Flight::request()->data->username;
             $password = Flight::request()->data->password;
             $email = Flight::request()->data->email;
-
+        
             $data = [$email , $username];
 
             $find = $users->findByEmailAndUsername($data);
@@ -109,7 +112,7 @@ class LoginController {
                 session_start();
                 $_SESSION['user'] = $find[0];
                 // Flight::redirect("/index");
-                Flight::render('Modal' , ['page' => 'welcome']);
+                Flight::render('Modal' , ['page' => 'welcome', 'categories'=>$categories]);
             }else{
                Flight::render('ModalLogin' , ['page' => 'UserLogin' , 'error' => 'Password invalid']);
             }
