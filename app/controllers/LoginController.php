@@ -59,15 +59,37 @@ class LoginController {
             if($find != null && password_verify($password, $find[0]['mot_de_passe'])) {
                 session_unset();
                 session_start();
-                $_SESSION['user'] = $find[0];
+                $_SESSION['Admin'] = $find[0];
                 // Flight::redirect("/index");
                 Flight::render('Modal' , ['page' => 'AdminPage']);
             }else{
                Flight::render('ModalLogin' , ['page' => 'AdminLogin' , 'error' => 'Password invalid']);
             }
+            // $admin = new UserModel(Flight::db());
+            // $username = Flight::request()->data->username;
+            // $password = Flight::request()->data->password;
+            // $email = Flight::request()->data->email;
+
+            // $data = [$email , $username];
+
+            // $find = $admin->findByEmailadmin($data);
+            // if($find == null || empty($find)) {
+            //     Flight::render('ModalLogin' , ['page' => 'UserLogin' , 'error' => 'Email or Username Not Found']);
+            //     return;
+            // }
+            // if($find != null && password_verify($password, $find[0]['mot_de_passe'])) {
+            //     session_unset();
+            //     session_start();
+            //     $_SESSION['user'] = $find[0];
+            //     // Flight::redirect("/index");
+            //     Flight::render('Modal' , ['page' => 'welcome']);
+            // }else{
+            //    Flight::render('ModalLogin' , ['page' => 'UserLogin' , 'error' => 'Password invalid']);
+            // }
     }
 
     public function LogintreatmentUser() {
+
 
             $users = new UserModel(Flight::db());
             $username = Flight::request()->data->username;
@@ -80,8 +102,11 @@ class LoginController {
             if($find == null || empty($find)) {
                 Flight::render('ModalLogin' , ['page' => 'UserLogin' , 'error' => 'Email or Username Not Found']);
                 return;
+                return;
             }
             if($find != null && password_verify($password, $find[0]['mot_de_passe'])) {
+                session_unset();
+                session_start();
                 session_unset();
                 session_start();
                 $_SESSION['user'] = $find[0];
