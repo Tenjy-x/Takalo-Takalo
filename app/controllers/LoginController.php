@@ -46,6 +46,8 @@ class LoginController {
 
     public function LogintreatmentAdmin() {
             $admin = new UserModel(Flight::db());
+            $categorieModel = new CategorieModel(Flight::db());
+            $categories = $categorieModel->getAllCategories();
             $username = Flight::request()->data->username;
             $password = Flight::request()->data->password;
             $email = Flight::request()->data->email;
@@ -62,7 +64,7 @@ class LoginController {
                 session_start();
                 $_SESSION['Admin'] = $find[0];
                 // Flight::redirect("/index");
-                Flight::render('ModalAdmin' , ['page' => 'AdminPage']);
+                Flight::render('ModalAdmin' , ['page' => 'AdminPage' , 'categories' => $categories]);
             }else{
                Flight::render('ModalLogin' , ['page' => 'AdminLogin' , 'error' => 'Password invalid']);
             }
