@@ -1,3 +1,6 @@
+<?php
+    // session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -86,6 +89,7 @@
             <div class="col-lg-4 col-6 text-left">
                 <form action="">
                     <div class="input-group">
+                        <br>
                         <input type="text" class="form-control" placeholder="Search for products">
                         <div class="input-group-append">
                             <span class="input-group-text bg-transparent text-primary">
@@ -93,8 +97,9 @@
                             </span>
                         </div>
                     </div>
-                </form>
-            </div>
+                    </form>
+                    <h1 class="ms-auto"><?php echo "USER = " . $_SESSION['user']['nom'] ; ?></h1>
+                </div>
             <div class="col-lg-4 col-6 text-right">
                 <p class="m-0">Customer Service</p>
                 <h5 class="m-0">+012 345 6789</h5>
@@ -137,8 +142,8 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="index.html" class="nav-item nav-link active">Home</a>
-                            <a href="shop.html" class="nav-item nav-link">Shop</a>
+                            <a href="#" class="nav-item nav-link active">Home</a>
+                            <a href="/Objet" class="nav-item nav-link">My Objects</a>
                             <a href="cart.html" class="nav-item nav-link">Shop Cart</a>
                             <a href="checkout.html" class="nav-item nav-link">Checkout</a>
                             <a href="contact.html" class="nav-item nav-link">Contact</a>
@@ -162,6 +167,7 @@
 
 
     <?php 
+        // extract(get_defined_vars());
         include("{$page}.php");
     ?>
     

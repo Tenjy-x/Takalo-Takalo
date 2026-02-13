@@ -14,4 +14,10 @@ class ObjectModel {
         $st = $this->db->prepare("INSERT INTO objet(titre, description , prix_estimatif , id_utilisateur_proprietaire , id_categorie) VALUES (? , ? , ? , ? , ?)");
         $st->execute($data);
     }
+
+    function getAllobjetById($id) {
+        $st = $this->db->prepare("SELECT * FROM objet WHERE id_utilisateur_proprietaire = ?");
+        $st->execute([$id]);
+        return $st->fetchAll();
+    }
 }

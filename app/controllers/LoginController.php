@@ -44,37 +44,31 @@ class LoginController {
     }
 
     public function LogintreatmentAdmin() {
-        $username = Flight::request()->data->username;
-        $password = Flight::request()->data->password;
-        
-        $users = new UserModel(Flight::db());
+            $admin = new UserModel(Flight::db());
+            $username = Flight::request()->data->username;
+            $password = Flight::request()->data->password;
+            $email = Flight::request()->data->email;
 
-        if($password === null || $password === '') {
-            Flight::halt(400, 'Mot de passe requis');
-        }
+            $data = [$email , $username];
 
-        $FindUser = $users->findUserByUsername($username);
-        if($FindUser == null || empty($FindUser)) {
-            $data = [$username , password_hash($password, PASSWORD_DEFAULT)];
-            $users->createAdmin($data);
-            $newUser = $users->findUserByUsername($username);
-            $_SESSION['admin'] = $newUser[0];
-        } else {
-            $user = $FindUser[0];
-            $storedPassword = $user['password'] ?? null;
-            if($storedPassword === null || !password_verify($password, $storedPassword)) {
-                Flight::halt(401, 'Identifiants invalides');
+            $find = $admin->findByEmailadmin($data);
+            if($find == null || empty($find)) {
+                Flight::render('ModalLogin' , ['page' => 'UserLogin' , 'error' => 'Email or Username Not Found']);
+                return;
             }
-            $_SESSION['admin'] = $user;
-        }
-
-        Flight::redirect("/index");
+            if($find != null && password_verify($password, $find[0]['mot_de_passe'])) {
+                session_unset();
+                session_start();
+                $_SESSION['user'] = $find[0];
+                // Flight::redirect("/index");
+                Flight::render('Modal' , ['page' => 'welcome']);
+            }else{
+               Flight::render('ModalLogin' , ['page' => 'UserLogin' , 'error' => 'Password invalid']);
+            }
     }
 
     public function LogintreatmentUser() {
-            if (session_status() === PHP_SESSION_NONE) {
-                session_start();
-            }
+
             $users = new UserModel(Flight::db());
             $username = Flight::request()->data->username;
             $password = Flight::request()->data->password;
@@ -85,8 +79,11 @@ class LoginController {
             $find = $users->findByEmailAndUsername($data);
             if($find == null || empty($find)) {
                 Flight::render('ModalLogin' , ['page' => 'UserLogin' , 'error' => 'Email or Username Not Found']);
+                return;
             }
             if($find != null && password_verify($password, $find[0]['mot_de_passe'])) {
+                session_unset();
+                session_start();
                 $_SESSION['user'] = $find[0];
                 // Flight::redirect("/index");
                 Flight::render('Modal' , ['page' => 'welcome']);

@@ -1,6 +1,7 @@
 <?php
 
 use app\controllers\ApiExampleController;
+use app\controllers\ObjectController;
 use app\controllers\LoginController; 
 use app\models\UserModel;
 use app\middlewares\SecurityHeadersMiddleware;
@@ -31,14 +32,20 @@ $router->group('', function(Router $router) use ($app) {
 		$app->render('ModalLogin' , ['page' => 'AdminLogin']);
 	});
 
-	$router->get('/hello-world/@name', function($name) {
-		echo '<h1>Hello world! Oh hey '.$name.'!</h1>';
+	$router->get('/Objet', [ObjectController::class, 'getAllObjects']); 
+
+	$router->get('/logout', function() use ($app) {
+		if (session_status() === PHP_SESSION_NONE) {
+			session_start();
+		}
+		session_unset();
+		session_destroy();
+		$app->redirect('/');
 	});
 
-
-	$router->post('/inscription', [loginController::class, 'register']);
-	$router->get('/adminLogin', [loginController::class, 'LogintreatmentAdmin']);
-	$router->post('/userLogin', [loginController::class, 'LogintreatmentUser']);
+	$router->post('/inscription', [LoginController::class, 'register']);
+	$router->post('/adminLogin', [LoginController::class, 'LogintreatmentAdmin']);
+	$router->post('/userLogin', [LoginController::class, 'LogintreatmentUser']);
 
 	// $router->group('/api', function() use ($router) {
 	// 	$router->get('/users', [ ApiExampleController::class, 'getUsers' ]);
