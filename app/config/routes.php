@@ -1,6 +1,7 @@
 <?php
 
 use app\controllers\ApiExampleController;
+use app\controllers\AdminController;
 use app\controllers\ObjectController;
 use app\controllers\LoginController; 
 use app\models\UserModel;
@@ -40,7 +41,8 @@ $router->group('', function(Router $router) use ($app) {
 
 		// $app->render('ModalLogin' , ['page' => 'UserLogin']);
 	});
-
+	
+	
 	$router->get('/user', function() use ($app) {
 		$controller = new ObjectController();
 
@@ -67,13 +69,21 @@ $router->group('', function(Router $router) use ($app) {
 		$app->render('Modal' , ['page' => 'Object' , 'categories' => $Categories , 'objects' => $objects]);
 	});
 
+	$router->get('/stat', function() use ($app) {
+		$controller = new ObjectController();
+		$controllerAdmin = new AdminController();
+		$Categories = $controller->getCategories();
+		$stats = $controllerAdmin->showStatistics();
+		$app->render('ModalAdmin' , ['page' => 'Statistiques' , 'categories' => $Categories ,'totaluser' => $stats['totalUsers'], 'users' => $stats['users']]);
+	});
+
 	$router->get('/objet/create', function() use ($app) {
 		$controller = new ObjectController();
 		$categories = $controller->getCategories();
 		$app->render('Modal' , ['page' => 'CreateObject' , 'categories' => $categories]);
 	});
 	// $router->get('/Objet', [ObjectController::class, 'getAllObjects']); 
-
+	
 	$router->post('/inscription', [LoginController::class, 'register']); 
 	$router->post('/adminLogin', [LoginController::class, 'LogintreatmentAdmin']);
 	$router->post('/userLogin', [LoginController::class, 'LogintreatmentUser']);

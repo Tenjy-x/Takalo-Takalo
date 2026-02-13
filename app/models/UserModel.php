@@ -30,5 +30,17 @@ class UserModel {
       $st->execute($data);
       return $st->fetchAll();
     }
+
+    public function getAllUsers() {
+      $st = $this->db->prepare("SELECT * FROM utilisateur");
+      $st->execute();
+      return $st->fetchAll();
+    }
+
+    public function countUsers() {
+      $st = $this->db->prepare("SELECT COUNT(*) as total FROM utilisateur");
+      $st->execute();
+      return $st->fetch()['total'];
+    }
     
 }
